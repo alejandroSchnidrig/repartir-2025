@@ -3,6 +3,7 @@ package ar.com.grupoesfera.repartir.steps.grupos;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import ar.com.grupoesfera.repartir.services.GruposService;
 import ar.com.grupoesfera.repartir.steps.FastCucumberSteps;
+import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,5 +22,14 @@ public class EliminarGrupoSteps extends FastCucumberSteps {
         assertNotNull(grupo);
         assertEquals(id, grupo.getId());
         assertEquals("Campamento", grupo.getNombre());
+    }
+
+    @Cuando("el usuario elimina el grupo con id {long}")
+    public void elUsuarioEliminaElGrupoConId(Long id) {
+        try {
+            gruposService.eliminar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
