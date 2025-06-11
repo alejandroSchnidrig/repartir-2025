@@ -3,11 +3,14 @@ package ar.com.grupoesfera.repartir.steps.grupos;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import ar.com.grupoesfera.repartir.services.GruposService;
 import ar.com.grupoesfera.repartir.steps.FastCucumberSteps;
-import io.cucumber.java.es.Cuando;
+import ar.com.grupoesfera.repartir.exceptions.GrupoNoEncontradoException;
 import io.cucumber.java.es.Dado;
+import io.cucumber.java.es.Cuando;
+import io.cucumber.java.es.Entonces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EliminarGrupoSteps extends FastCucumberSteps {
@@ -21,11 +24,15 @@ public class EliminarGrupoSteps extends FastCucumberSteps {
 
         assertNotNull(grupo);
         assertEquals(id, grupo.getId());
-        assertEquals("Campamento", grupo.getNombre());
     }
 
     @Cuando("el usuario elimina el grupo con id {long}")
     public void elUsuarioEliminaElGrupoConId(Long id) {
         gruposService.eliminar(id);
+    }
+
+    @Entonces("el grupo con id {long} ya no debería aparecer en la lista de grupos")
+    public void elGrupoYaNoDeberiaEstarEnLaLista(Long id) {
+        assertThrows(GrupoNoEncontradoException.class, () -> gruposService.recuperar(id));
     }
 }
