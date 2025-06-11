@@ -26,10 +26,6 @@ public class EliminarGrupoSteps extends FastCucumberSteps {
 
     @Cuando("el usuario elimina el grupo con id {long}")
     public void elUsuarioEliminaElGrupoConId(Long id) {
-        try {
-            gruposService.eliminar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        gruposService.eliminar(id);
     }
 }

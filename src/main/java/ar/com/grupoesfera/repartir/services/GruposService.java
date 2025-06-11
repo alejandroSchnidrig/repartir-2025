@@ -69,4 +69,8 @@ public class GruposService {
         return grupo;
     }
 
+    public void eliminar(Long id) {
+        repository.deleteById(id);
+    }
+
 }
