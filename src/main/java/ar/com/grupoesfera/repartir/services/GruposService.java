@@ -70,6 +70,12 @@ public class GruposService {
     }
 
     public void eliminar(Long id) {
+        Optional<Grupo> grupoBuscado = repository.findById(id);
+
+        if (!grupoBuscado.isPresent()) {
+            throw new GrupoNoEncontradoException();
+        }
+
         repository.deleteById(id);
     }
 
