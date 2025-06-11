@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class EliminarGrupoSteps extends FastCucumberSteps {
 
     @Autowired
     private GruposService gruposService;
+
+    private Exception excepcionCapturada;
 
     @Dado("que existe un grupo con id {long}")
     public void queExisteUnGrupoConId(Long id) {
@@ -41,7 +44,13 @@ public class EliminarGrupoSteps extends FastCucumberSteps {
         try {
             gruposService.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            excepcionCapturada = e;
         }
+    }
+
+    @Entonces("el sistema debería informar que el grupo no existe")
+    public void elSistemaDeberiaInformarQueElGrupoNoExiste() {
+        assertNotNull(excepcionCapturada);
+        assertInstanceOf(GrupoNoEncontradoException.class, excepcionCapturada);
     }
 }
