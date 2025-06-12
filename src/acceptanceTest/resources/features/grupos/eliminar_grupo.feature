@@ -6,6 +6,7 @@ Característica: Eliminar grupo de gastos
 
     Escenario: Eliminar un grupo existente en la tabla exitosamente
       Dado que el usuario inicia la aplicación
-      Y que el usuario visualiza un grupo de gastos llamado "Gasto minimo"
-      Cuando el usuario hace clic en el botón de eliminar del grupo "Gasto minimo"
+      Y el usuario crea un grupo de gastos llamado "Gasto Mayo"
+      Y el usuario crea un grupo de gastos llamado "Gasto Julio"
+      Cuando el usuario hace click en el botón de eliminar del grupo "Gasto minimo"
       Entonces el grupo "Gasto minimo" ya no debería aparecer en la lista de grupos
