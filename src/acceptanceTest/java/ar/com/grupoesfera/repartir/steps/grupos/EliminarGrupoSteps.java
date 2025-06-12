@@ -3,6 +3,7 @@ package ar.com.grupoesfera.repartir.steps.grupos;
 import ar.com.grupoesfera.repartir.steps.CucumberSteps;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
+import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
@@ -16,6 +17,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -74,6 +76,26 @@ public class EliminarGrupoSteps extends CucumberSteps {
         }
 
         throw new NoSuchElementException("No se encontró el grupo con nombre: " + nombreGrupo);
+    }
+
+    @Entonces("el grupo {string} ya no debería aparecer en la tabla de grupos")
+    public void elGrupoYaNoDeberiaAparecerEnlaTablaDeGrupos(String nombreGrupo){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("tablaGrupos")));
+
+        WebElement tabla = driver.findElement(By.id("tablaGrupos"));
+        List<WebElement> filas = tabla.findElements(By.tagName("tr"));
+
+        boolean encontrado = false;
+
+        for (WebElement fila : filas) {
+            List<WebElement> columnas = fila.findElements(By.tagName("td"));
+            if (!columnas.isEmpty() && columnas.get(1).getText().equals(nombreGrupo)) {
+                encontrado = true;
+            }
+        }
+
+        assertFalse(encontrado);
     }
 
 }

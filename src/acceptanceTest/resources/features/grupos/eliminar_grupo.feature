@@ -9,4 +9,4 @@ Característica: Eliminar grupo de gastos
       Y el usuario crea un grupo de gastos llamado "Gasto Mayo"
       Y el usuario crea un grupo de gastos llamado "Gasto Julio"
       Cuando el usuario hace click en el botón de eliminar del grupo "Gasto Julio"
-      Entonces el grupo "Gasto Julio" ya no debería aparecer en la lista de grupos
+      Entonces el grupo "Gasto Julio" ya no debería aparecer en la tabla de grupos
