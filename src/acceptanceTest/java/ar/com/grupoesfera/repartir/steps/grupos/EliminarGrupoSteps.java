@@ -1,6 +1,7 @@
 package ar.com.grupoesfera.repartir.steps.grupos;
 
 import ar.com.grupoesfera.repartir.steps.CucumberSteps;
+import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Y;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +35,7 @@ public class EliminarGrupoSteps extends CucumberSteps {
     }
 
     @Y("el usuario crea un grupo de gastos llamado {string}")
-    public void queElUsuarioVisualizaUnGrupoDeGastosLlamado(String nombreGrupo) {
+    public void elUsuarioCreaUnGrupoDeGastosLlamado(String nombreGrupo) {
         var crearGruposButton = driver.findElement(By.id("crearGruposButton"));
         crearGruposButton.click();
 
@@ -46,6 +47,15 @@ public class EliminarGrupoSteps extends CucumberSteps {
         miembrosInput.sendKeys("Maria");
         miembrosInput.sendKeys(Keys.ENTER);
         driver.findElement(By.id("guardarGrupoNuevoButton")).click();
+
+        var wait = new WebDriverWait(driver, Duration.of(2, ChronoUnit.SECONDS));
+        wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+    }
+
+    @Cuando("el usuario hace click en el botón de eliminar del grupo {string}")
+    public void elUsuarioHaceClickEnElBotonDeEliminarDelGrupo(String nombreGrupo) {
+        var eliminarGruposButton = driver.findElement(By.id("eliminarGruposButton"));
+        eliminarGruposButton.click();
 
         var wait = new WebDriverWait(driver, Duration.of(2, ChronoUnit.SECONDS));
         wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
