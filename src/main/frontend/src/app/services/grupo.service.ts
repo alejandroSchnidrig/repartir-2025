@@ -21,6 +21,11 @@ export class GrupoService {
       .pipe(catchError(this.falloAlListar));
   }
 
+  eliminar(id: number): Observable<void>{
+    return this.http.delete<void>(`/api/grupos/eliminar/${id}`)
+      .pipe(catchError(this.falloAlEliminar));
+  }
+
   crear(nombre: string, miembros: string[]): Observable<Grupo> {
 
     const nuevoGrupo: Grupo = {
@@ -48,5 +53,9 @@ export class GrupoService {
 
   falloAlListar(error: HttpErrorResponse) {
     return throwError(new Excepcion("No se pueden listar los Grupos"));
+  }
+
+  falloAlEliminar(error: HttpErrorResponse) {
+    return throwError(new Excepcion("No se puede eliminar el grupo"));
   }
 }

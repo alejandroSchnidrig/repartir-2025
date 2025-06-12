@@ -1,5 +1,5 @@
 <p-card header="Grupos">
-  <p-table [value]="lista"  styleClass="p-datatable-striped" [autoLayout]="true">
+  <p-table [value]="lista"  styleClass="p-datatable-striped" [autoLayout]="true" id="tablaGrupos">
     <ng-template pTemplate="header">
       <tr>
         <th class="text-center text-primary">id</th>
@@ -7,6 +7,7 @@
         <th class="text-center">total</th>
         <th class="text-center">miembros</th>
         <th class="text-center">gastos</th>
+        <th class="text-center">eliminar</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-grupo>
@@ -19,6 +20,9 @@
         </td>
         <td>
           <p-button [id]="'agregarGastoGruposButton-' + grupo.id" icon="pi pi-plus" (onClick)="agregarGasto(grupo)" styleClass="p-button-secondary p-button-rounded"></p-button>
+        </td>
+        <td>
+          <p-button [id]="'eliminarGrupoButton-' + grupo.id" icon="pi pi-trash" (onClick)="eliminarGrupo(grupo)" styleClass="p-button-secondary p-button-rounded"></p-button>
         </td>
       </tr>
     </ng-template>

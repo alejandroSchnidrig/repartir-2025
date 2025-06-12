@@ -7,10 +7,14 @@ import io.cucumber.java.es.Y;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -54,11 +58,22 @@ public class EliminarGrupoSteps extends CucumberSteps {
 
     @Cuando("el usuario hace click en el botón de eliminar del grupo {string}")
     public void elUsuarioHaceClickEnElBotonDeEliminarDelGrupo(String nombreGrupo) {
-        var eliminarGruposButton = driver.findElement(By.id("eliminarGruposButton"));
-        eliminarGruposButton.click();
+        WebElement tabla = driver.findElement(By.id("tablaGrupos"));
+        List<WebElement> filas = tabla.findElements(By.tagName("tr"));
 
-        var wait = new WebDriverWait(driver, Duration.of(2, ChronoUnit.SECONDS));
-        wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        for (WebElement fila : filas) {
+            List<WebElement> columnas = fila.findElements(By.tagName("td"));
+            if (!columnas.isEmpty() && columnas.get(1).getText().equals(nombreGrupo)) {
+                WebElement botonEliminar = fila.findElement(By.cssSelector("p-button[id^='eliminarGrupoButton'] button"));
+                botonEliminar.click();
+
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mensajesToast")));
+                return;
+            }
+        }
+
+        throw new NoSuchElementException("No se encontró el grupo con nombre: " + nombreGrupo);
     }
 
 }

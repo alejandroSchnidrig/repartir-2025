@@ -8,5 +8,5 @@ Característica: Eliminar grupo de gastos
       Dado que el usuario inicia la aplicación
       Y el usuario crea un grupo de gastos llamado "Gasto Mayo"
       Y el usuario crea un grupo de gastos llamado "Gasto Julio"
-      Cuando el usuario hace click en el botón de eliminar del grupo "Gasto minimo"
+      Cuando el usuario hace click en el botón de eliminar del grupo "Gasto Julio"
       Entonces el grupo "Gasto minimo" ya no debería aparecer en la lista de grupos
