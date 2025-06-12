@@ -55,17 +55,35 @@ export class GruposComponent implements OnInit, AfterViewInit {
   eliminarGrupo(grupo: Grupo): void {
     if (grupo.id != null) {
       this.grupoService.eliminar(grupo.id).subscribe({
-        next: () => this.cargar()
-      });;
+        next: () => this.eliminadoExitoso(grupo),
+        error: error => this.eliminadoFallido(error)
+      });
     }
   }
-
+ 
   private listadoFallido(error: any): void {
 
     this.messageService.add({
       severity: 'error',
       summary: 'Error',
       detail: error.mensaje,
+    });
+  }
+
+  private eliminadoExitoso(grupo: Grupo): void {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Éxito',
+      detail: `Grupo '${grupo.nombre}' eliminado correctamente.`,
+    });
+    this.cargar();
+  }
+
+  private eliminadoFallido(error: any): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error al eliminar',
+      detail: error?.mensaje || 'No se pudo eliminar el grupo.',
     });
   }
 }
